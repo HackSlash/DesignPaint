@@ -178,14 +178,6 @@ public class Shape implements Component{
         ret.add(this.toListItem(prefix));
         return ret;
     }
-    
-    @Override
-    public String print(String name) {
-        //System.out.println(prefix + toString());
-        
-//        Path path = FileSystems.getDefault().getPath(name);
-        return "";
-    } 
 
     @Override
     public Component select(int x, int y) {

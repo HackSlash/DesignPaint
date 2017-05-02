@@ -30,24 +30,6 @@ public class Composite implements Component{
     }
     
     /**
-     * Recursive ToString method.
-     * @param prefix prefix for recursiveness.
-     * @return string representation of the object.
-     */
-    @Override
-    public String print(String prefix){
-        String result = prefix + toString();
-        if(prefix.equals(""))
-            prefix = "    ";
-        else
-            prefix = prefix.concat("    ");
-        
-        for(Component component : components)
-            result = result + "\r\n" + component.print(prefix);
-        return result;
-    }
-    
-    /**
      * Returns a string representation of the object.
      * @return string representation of object.
      */
