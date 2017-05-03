@@ -51,5 +51,10 @@ public class SelectStrategy extends Strategy {
     public String toString(Shape shape) {
         return "select " + shape.coordinateX + " " + shape.coordinateY + " " + (shape.coordinateX + shape.width) + " " + (shape.coordinateY + shape.height);
     }
+    
+    @Override
+    public String getName() {
+        return "Select";
+    }
 
 }

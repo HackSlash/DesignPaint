@@ -7,10 +7,19 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class ShapeDecorator implements Component{
 
-    private final Component father;
+    protected enum Location{
+        LEFT,
+        RIGHT,
+        ABOVE,
+        BELOW
+    }
     
-    public ShapeDecorator(Component father) {
+    protected final Component father;
+    protected final Location location;
+    
+    public ShapeDecorator(Component father, Location location) {
         this.father = father;
+        this.location = location;
     }
 
     @Override

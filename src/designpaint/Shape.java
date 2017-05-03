@@ -169,7 +169,7 @@ public class Shape implements Component{
 
     @Override
     public GroupListItem toListItem(String prefix) {
-        return new GroupListItem(new AtomicReference<>(this), prefix+this.getClass().getSimpleName());
+        return new GroupListItem(new AtomicReference<>(this), prefix+strategy.getName());
     }
 
     @Override

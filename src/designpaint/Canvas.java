@@ -1,5 +1,6 @@
 package designpaint;
 
+import designpaint.ShapeDecorator.Location;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -273,9 +274,10 @@ public class Canvas extends JPanel implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        Command cmd;
         switch(e.getActionCommand()) {
             case "save":
-                Command cmd = new Command_Save(rootRef.get(), "test.txt");
+                cmd = new Command_Save(rootRef.get(), "test.txt");
                 cmd.execute();
                 break;
             case "load":
@@ -320,7 +322,16 @@ public class Canvas extends JPanel implements ActionListener {
                 selectedShape.get().getGroup().get().add(newGroup);
                 selectedShape.set(newGroup);
                 selectedGroup.set(newGroup);
-                //root.add(new Composite());
+                break;
+            case "caption":
+                String tekst;
+                Location location;
+                //sample code
+                location = Location.RIGHT;
+                tekst = "TEST";
+                //end sample code
+                cmd = new Command_AddCaption(selectedShape.get(), location, tekst);
+                cmd.execute();
                 break;
             default:
                 break;
