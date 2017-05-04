@@ -19,6 +19,10 @@ public class Composite implements Component{
         this.components = new ArrayList<>();
     }
     
+    public boolean contains(Component c) {
+        return components.contains(c);
+    }
+    
     /**
      * Add component to composite.
      * @param component Component to add to the composite.
@@ -27,24 +31,6 @@ public class Composite implements Component{
     {
         if(!(component instanceof Composite)) component.setGroup(new AtomicReference<>(this));
         components.add(component);
-    }
-    
-    /**
-     * Recursive ToString method.
-     * @param prefix prefix for recursiveness.
-     * @return string representation of the object.
-     */
-    @Override
-    public String print(String prefix){
-        String result = prefix + toString();
-        if(prefix.equals(""))
-            prefix = "    ";
-        else
-            prefix = prefix.concat("    ");
-        
-        for(Component component : components)
-            result = result + "\r\n" + component.print(prefix);
-        return result;
     }
     
     /**
@@ -125,7 +111,7 @@ public class Composite implements Component{
      */
     @Override
     public void draw(Graphics g) {
-        components.parallelStream().forEach((component) -> component.draw(g));
+        components.forEach((component) -> component.draw(g));
     }
     
     /**
@@ -161,9 +147,10 @@ public class Composite implements Component{
     public int getX() {
         int x = -1;
         for(Component component : components){
+            if (component instanceof CaptionDecorator) continue;
             if(x == -1){
                 x = component.getX();
-            }else if(component.getX() < x){
+            } else if(component.getX() < x){
                 x = component.getX();
             }
         }
@@ -174,91 +161,84 @@ public class Composite implements Component{
     public int getOX() {
         int originalX = -1;
         for(Component component : components){
-            if(originalX == -1){
+            if (component instanceof CaptionDecorator) continue;
+            if(originalX == -1)
                 originalX = component.getOX();
-            }else if(component.getOX() < originalX){
+            else if(component.getOX() < originalX)
                 originalX = component.getOX();
-            }
-        }
-        return originalX;
+        } return originalX;
     }
 
     @Override
     public int getY() {
         int y = -1;
         for(Component component : components){
-            if(y == -1){
+            if (component instanceof CaptionDecorator) continue;
+            if(y == -1)
                 y = component.getY();
-            }else if(component.getY() < y){
+            else if(component.getY() < y)
                 y = component.getY();
-            }
-        }
-        return y;
+        } return y;
     }
 
     @Override
     public int getOY() {
         int originalY = -1;
         for(Component component : components){
-            if(originalY == -1){
+            if (component instanceof CaptionDecorator) continue;
+            if(originalY == -1)
                 originalY = component.getOY();
-            }else if(component.getOY() < originalY){
+            else if(component.getOY() < originalY)
                 originalY = component.getOY();
-            }
-        }
-        return originalY;
+        } return originalY;
     }
     
     @Override
     public int getW() {
         int w = -1;
         for(Component component : components){
-            if(w == -1){
+            if (component instanceof CaptionDecorator) continue;
+            if(w == -1)
                 w = component.getW();
-            }else if(component.getW() > w){
+            else if(component.getW() > w)
                 w = component.getW();
-            }
-        }
-        return w;
+        } return w;
     }
 
     @Override
     public int getH() {
         int h = -1;
         for(Component component : components){
-            if(h == -1){
+            if (component instanceof CaptionDecorator) continue;
+            if(h == -1)
                 h = component.getH();
-            }else if(component.getH() > h){
+            else if(component.getH() > h)
                 h = component.getH();
-            }
-        }
-        return h;
+        } return h;
     }
     
     @Override
     public int getFarX() {
         int x = -1;
         for(Component component : components){
-            if(x == -1){
+            if (component instanceof CaptionDecorator) continue;
+            if(x == -1)
                 x = component.getFarX();
-            }else if(component.getFarX() > x){
+            else if(component.getFarX() > x)
                 x = component.getFarX();
-            }
-        }
-        return x;
+        } return x;
     }
 
     @Override
     public int getFarY() {
         int y = -1;
         for(Component component : components){
-            if(y == -1){
+            if (component instanceof CaptionDecorator) continue;
+            if(y == -1)
                 y = component.getFarY();
-            }else if(component.getFarY() > y){
+            else if(component.getFarY() > y)
                 y = component.getFarY();
-            }
-        }
-        return y;
+        } return y;
     }
     
     @Override
@@ -278,7 +258,7 @@ public class Composite implements Component{
     @Override
     public void Accept(Visitor v) {
         v.Visit(this);
-//        components.forEach((Component component) -> component.Accept(v));
-        components.parallelStream().forEach(c -> c.Accept(v));
+//      components.forEach((Component component) -> component.Accept(v));
+        components.forEach(c -> c.Accept(v));
     }
 }

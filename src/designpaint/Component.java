@@ -24,13 +24,6 @@ public interface Component {
     public List<GroupListItem> toFlatList(String prefix);
 
     /**
-     * Basically ToString with recursion.
-     * @param prefix Used for recursive use.
-     * @return A string.
-     */
-    public String print(String prefix);
-
-    /**
      * Resizes the component.
      * @param offsetW width offset to resize to.
      * @param offsetH height offset to resize to.

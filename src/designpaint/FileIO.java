@@ -1,11 +1,11 @@
 package designpaint;
 
+import designpaint.ShapeDecorator.Location;
 import java.io.IOException;
 import java.util.List;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -13,30 +13,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * Contains base logic for saving and loading images
  */
 public class FileIO {
-    /**
-     * Saves the given List to a file with the given name.
-     * @param root Group to save
-     * @param name Name of the file (relative to working directory)
-     */
-    public static void save(Composite root, String name) {
-        //String toSave = (String)shapes.stream().map(Object::toString).collect(Collectors.joining("\r\n"));
-        String toSave = root.print("");
-        System.out.println(toSave);
-        Path path = FileSystems.getDefault().getPath(name);
-        
-        try
-        {
-            Files.write(path, 
-                    toSave.getBytes(),
-                    StandardOpenOption.TRUNCATE_EXISTING,
-                    StandardOpenOption.WRITE,
-                    StandardOpenOption.CREATE);
-        }
-        catch (IOException e)
-        {
-            System.err.println(e);
-        }
-    }
     
     /**
      * Loads a list of shapes from a file with the given name.
@@ -69,6 +45,7 @@ public class FileIO {
         Command cmd;
         String line = lines.get(linesIndex);
         String[] split = line.trim().split(" ");
+        int count = 1;
 
         switch(split[0]){
             case "ellipse":
@@ -96,7 +73,6 @@ public class FileIO {
                 stack.peek().get().add(newGroup);
                 AtomicReference<Composite> ref = new AtomicReference(newGroup);
                 stack.push(ref);
-                int count = 1;
                 for(int i = linesIndex+1; i <= linesIndex+Integer.parseInt(split[1]);) {
                     int linesProcessed = parse(lines, i, stack, newShape, rootRef);
                     count += linesProcessed;
@@ -104,10 +80,34 @@ public class FileIO {
                 }
                 stack.pop();
                 return count;
+            case "ornament":
+                AtomicReference<Component> newC = new AtomicReference<>();
+                count += parse(lines, linesIndex+1, stack, newC, rootRef);
+                String text = "";
+                for(int i = 2; i < split.length; i++)
+                    text += split[i].replace('"', ' ').trim() + " ";
+                cmd = new Command_AddCaption(newC.get(), parseLocation(split[1]), newShape, text);
+                cmd.execute();
+                break;
             default:
                 break;
         }
         return 1;
+    }
+    
+    private static Location parseLocation(String stringLocation) {
+        switch(stringLocation) {
+            case "LEFT":
+                return Location.LEFT;
+            case "RIGHT":
+                return Location.RIGHT;
+            case "ABOVE":
+                return Location.ABOVE;
+            case "BELOW":
+                return  Location.BELOW;
+            default:
+                return null;
+        }
     }
     
 }

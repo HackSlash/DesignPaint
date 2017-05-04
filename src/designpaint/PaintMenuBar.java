@@ -91,6 +91,12 @@ public class PaintMenuBar extends JMenuBar {
         group.setActionCommand("group");
         group.addActionListener(panel);
         shapeMenu.add(group);
+        
+        JMenuItem caption = new JMenuItem("Caption");
+        caption.setMnemonic(VK_D);
+        caption.setActionCommand("caption");
+        caption.addActionListener(panel);
+        shapeMenu.add(caption);
 
         this.add(shapeMenu);
     }

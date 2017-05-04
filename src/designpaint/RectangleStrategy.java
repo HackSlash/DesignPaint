@@ -37,5 +37,9 @@ public class RectangleStrategy extends Strategy{
     public String toString(Shape shape) {
         return "rectangle " + shape.coordinateX + " " + shape.coordinateY + " " + (shape.coordinateX + shape.width) + " " + (shape.coordinateY + shape.height);
     }
-    
+
+    @Override
+    public String getName() {
+        return "Rectangle";
+    }
 }

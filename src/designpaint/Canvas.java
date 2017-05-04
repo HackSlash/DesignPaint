@@ -1,5 +1,6 @@
 package designpaint;
 
+import designpaint.ShapeDecorator.Location;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ import java.util.Stack;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -273,9 +275,10 @@ public class Canvas extends JPanel implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        Command cmd;
         switch(e.getActionCommand()) {
             case "save":
-                Command cmd = new Command_Save(rootRef.get(), "test.txt");
+                cmd = new Command_Save(rootRef.get(), "test.txt");
                 cmd.execute();
                 break;
             case "load":
@@ -320,7 +323,13 @@ public class Canvas extends JPanel implements ActionListener {
                 selectedShape.get().getGroup().get().add(newGroup);
                 selectedShape.set(newGroup);
                 selectedGroup.set(newGroup);
-                //root.add(new Composite());
+                break;
+            case "caption":
+                InputWindow input = new InputWindow();
+                if(input.show() == JOptionPane.OK_OPTION) {
+                    cmd = new Command_AddCaption(selectedShape.get(), input.getLocation(), selectedShape, input.getText());
+                    cmd.execute();
+                }
                 break;
             default:
                 break;

@@ -164,12 +164,12 @@ public class Shape implements Component{
      */
     @Override
     public String toString() {
-        return "generic " + coordinateX + " " + coordinateY + " " + width + " " + height;
+        return strategy.toString(this);
     }
 
     @Override
     public GroupListItem toListItem(String prefix) {
-        return new GroupListItem(new AtomicReference<>(this), prefix+this.getClass().getSimpleName());
+        return new GroupListItem(new AtomicReference<>(this), prefix+strategy.getName());
     }
 
     @Override
@@ -178,14 +178,6 @@ public class Shape implements Component{
         ret.add(this.toListItem(prefix));
         return ret;
     }
-    
-    @Override
-    public String print(String name) {
-        //System.out.println(prefix + toString());
-        
-//        Path path = FileSystems.getDefault().getPath(name);
-        return "";
-    } 
 
     @Override
     public Component select(int x, int y) {
