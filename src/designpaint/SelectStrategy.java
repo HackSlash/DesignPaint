@@ -56,5 +56,4 @@ public class SelectStrategy extends Strategy {
     public String getName() {
         return "Select";
     }
-
 }
