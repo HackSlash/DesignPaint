@@ -41,7 +41,9 @@ public class InputWindow {
                 return Location.ABOVE;
             case "BELOW":
                 return  Location.BELOW;
-        } return null;
+            default:
+                return null;
+        }
     }
     
 }

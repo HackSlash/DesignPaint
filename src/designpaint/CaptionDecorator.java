@@ -72,7 +72,7 @@ public class CaptionDecorator extends ShapeDecorator {
     @Override
     public void Accept(Visitor v) {
         v.Visit(this);
-        father.Accept(v);
+        if(!(father instanceof Composite)) father.Accept(v);
     }
     
     public String getDecoratorType() {

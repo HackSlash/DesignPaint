@@ -164,7 +164,7 @@ public class Shape implements Component{
      */
     @Override
     public String toString() {
-        return "generic " + coordinateX + " " + coordinateY + " " + width + " " + height;
+        return strategy.toString(this);
     }
 
     @Override

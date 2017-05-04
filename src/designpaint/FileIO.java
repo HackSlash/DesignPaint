@@ -1,11 +1,11 @@
 package designpaint;
 
+import designpaint.ShapeDecorator.Location;
 import java.io.IOException;
 import java.util.List;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -45,6 +45,7 @@ public class FileIO {
         Command cmd;
         String line = lines.get(linesIndex);
         String[] split = line.trim().split(" ");
+        int count = 1;
 
         switch(split[0]){
             case "ellipse":
@@ -72,7 +73,6 @@ public class FileIO {
                 stack.peek().get().add(newGroup);
                 AtomicReference<Composite> ref = new AtomicReference(newGroup);
                 stack.push(ref);
-                int count = 1;
                 for(int i = linesIndex+1; i <= linesIndex+Integer.parseInt(split[1]);) {
                     int linesProcessed = parse(lines, i, stack, newShape, rootRef);
                     count += linesProcessed;
@@ -80,10 +80,34 @@ public class FileIO {
                 }
                 stack.pop();
                 return count;
+            case "ornament":
+                AtomicReference<Component> newC = new AtomicReference<>();
+                count += parse(lines, linesIndex+1, stack, newC, rootRef);
+                String text = "";
+                for(int i = 2; i < split.length; i++)
+                    text += split[i].replace('"', ' ').trim() + " ";
+                cmd = new Command_AddCaption(newC.get(), parseLocation(split[1]), newShape, text);
+                cmd.execute();
+                break;
             default:
                 break;
         }
         return 1;
+    }
+    
+    private static Location parseLocation(String stringLocation) {
+        switch(stringLocation) {
+            case "LEFT":
+                return Location.LEFT;
+            case "RIGHT":
+                return Location.RIGHT;
+            case "ABOVE":
+                return Location.ABOVE;
+            case "BELOW":
+                return  Location.BELOW;
+            default:
+                return null;
+        }
     }
     
 }

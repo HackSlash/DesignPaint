@@ -327,7 +327,7 @@ public class Canvas extends JPanel implements ActionListener {
             case "caption":
                 InputWindow input = new InputWindow();
                 if(input.show() == JOptionPane.OK_OPTION) {
-                    cmd = new Command_AddCaption(selectedShape.get(), input.getLocation(), input.getText());
+                    cmd = new Command_AddCaption(selectedShape.get(), input.getLocation(), selectedShape, input.getText());
                     cmd.execute();
                 }
                 break;
