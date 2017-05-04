@@ -14,6 +14,7 @@ import java.util.Stack;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -324,14 +325,11 @@ public class Canvas extends JPanel implements ActionListener {
                 selectedGroup.set(newGroup);
                 break;
             case "caption":
-                String tekst;
-                Location location;
-                //sample code
-                location = Location.RIGHT;
-                tekst = "TEST";
-                //end sample code
-                cmd = new Command_AddCaption(selectedShape.get(), location, tekst);
-                cmd.execute();
+                InputWindow input = new InputWindow();
+                if(input.show() == JOptionPane.OK_OPTION) {
+                    cmd = new Command_AddCaption(selectedShape.get(), input.getLocation(), input.getText());
+                    cmd.execute();
+                }
                 break;
             default:
                 break;

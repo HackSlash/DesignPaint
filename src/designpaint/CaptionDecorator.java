@@ -34,13 +34,15 @@ public class CaptionDecorator extends ShapeDecorator {
         int x = father.getX();
         switch(location) {
             case LEFT:
+                x -= 8;
+                x -= text.length()*5;
                 break;
             case RIGHT:
                 x += father.getW();
                 break;
             case ABOVE:
-                break;
             case BELOW:
+                x += father.getW()/4;
                 break;
         } return x;
     }
@@ -49,13 +51,15 @@ public class CaptionDecorator extends ShapeDecorator {
         int y = father.getY();
         switch(location) {
             case LEFT:
-                break;
             case RIGHT:
                 y += father.getH()/2;
                 break;
             case ABOVE:
+                y -= 4;
                 break;
             case BELOW:
+                y += father.getH();
+                y += 10;
                 break;
         } return y;
     }
