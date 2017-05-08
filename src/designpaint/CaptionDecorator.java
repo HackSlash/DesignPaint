@@ -13,7 +13,7 @@ public class CaptionDecorator extends ShapeDecorator {
     
     public CaptionDecorator(Component father, Location location, String text) {
         super(father, location);
-        this.text = text;
+        this.text = text.trim();
     }
 
     public String getText() {

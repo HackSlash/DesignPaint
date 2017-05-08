@@ -81,21 +81,27 @@ public class FileIO {
                 stack.pop();
                 return count;
             case "ornament":
-                AtomicReference<Component> newC = new AtomicReference<>();
-                count += parse(lines, linesIndex+1, stack, newC, rootRef);
+                AtomicReference<Component> newComponent = new AtomicReference<>();
+                count += parse(lines, linesIndex+1, stack, newComponent, rootRef);
                 String text = "";
                 for(int i = 2; i < split.length; i++)
                     text += split[i].replace('"', ' ').trim() + " ";
-                cmd = new Command_AddCaption(newC.get(), parseLocation(split[1]), newShape, text);
+                cmd = new Command_AddCaption(
+                        newComponent.get(),
+                        parseLocation(split[1]),
+                        newShape,
+                        text);
                 cmd.execute();
                 break;
             default:
+                System.out.println(split[0]);
                 break;
         }
-        return 1;
+        return count;
     }
     
     private static Location parseLocation(String stringLocation) {
+        System.out.println(stringLocation);
         switch(stringLocation) {
             case "LEFT":
                 return Location.LEFT;
