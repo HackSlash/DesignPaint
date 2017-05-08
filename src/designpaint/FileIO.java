@@ -90,9 +90,26 @@ public class FileIO {
                 cmd.execute();
                 break;
             default:
+                System.out.println(split[0]);
                 break;
         }
-        return 1;
+        return count;
+    }
+    
+    private static Location parseLocation(String stringLocation) {
+        System.out.println(stringLocation);
+        switch(stringLocation) {
+            case "LEFT":
+                return Location.LEFT;
+            case "RIGHT":
+                return Location.RIGHT;
+            case "ABOVE":
+                return Location.ABOVE;
+            case "BELOW":
+                return  Location.BELOW;
+            default:
+                return null;
+        }
     }
     
     private static Location parseLocation(String stringLocation) {

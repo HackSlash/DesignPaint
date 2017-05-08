@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class ShapeDecorator implements Component{
 
-    protected enum Location{
+    public enum Location{
         LEFT,
         RIGHT,
         ABOVE,
